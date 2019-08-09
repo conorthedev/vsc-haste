@@ -8,7 +8,7 @@ Upload a selection of code to hastebin, or even a full file!
 
 ## Requirements
 
-vscode >= 1.37.0"
+vscode >= 1.37.0
 
 ## Extension Settings
 
@@ -17,6 +17,11 @@ This extension contributes the following settings:
 * `vsc-haste.host`: set the hastebin provider (e.g. ``https://haste.uses-dark-the.me``)
 
 ## Release Notes
+
+### 1.0.1
+
+Fix commands not showing in context menu
+
 
 ### 1.0.0
 
