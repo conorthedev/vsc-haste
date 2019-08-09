@@ -7,7 +7,7 @@
 		"type": "git",
 		"url": "git://github.com/ConorTheDev/vsc-haste.git"
 	},
-	"version": "0.0.1",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.37.0"
 	},
@@ -27,11 +27,14 @@
 			},
 			{
 				"command": "extension.vsc-haste.upload-file-select",
-				"title": "Upload selection to Haste"
+				"title": "Upload Selection to Haste"
 			}
 		],
 		"menus": {
-			"explorer/context": [
+			"editor/context": [
+				{
+					"command": "extension.vsc-haste.upload-file"
+				},
 				{
 					"command": "extension.vsc-haste.upload-file-select"
 				}
