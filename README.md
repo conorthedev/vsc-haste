@@ -29,6 +29,7 @@ vscode >= 1.37.0
 This extension contributes the following settings:
 
 * `vsc-haste.host`: set the hastebin provider (e.g. ``https://haste.uses-dark-the.me``, ``https://psty.io``)
+* `vsc-haste.psty.theme`: set the theme to use for psty.io uploads (matches dropdown on https://psty.io) (not required if you're not using psty.io)
 
 ## Release Notes
 
