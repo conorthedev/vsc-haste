@@ -1,6 +1,4 @@
-# vsc-haste
-
-Upload code to hasteb.in or a custom haste provider
+![header](https://raw.githubusercontent.com/ConorTheDev/vsc-haste/master/img/header.png)
 
 ## Features
 
