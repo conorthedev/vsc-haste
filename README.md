@@ -17,6 +17,8 @@
 ![context-windows](https://raw.githubusercontent.com/ConorTheDev/vsc-haste/master/img/preview/context-windows.png)
 ![context](https://raw.githubusercontent.com/ConorTheDev/vsc-haste/master/img/preview/context.png)
 
+### Planned Features
+* Custom haste URLs (e.g. myhaste.haste.conorthedev.me // myhaste.vsc-haste.something)
 
 ## Requirements
 
