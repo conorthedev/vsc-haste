@@ -3,6 +3,7 @@
 	"displayName": "vsc-haste",
 	"description": "Upload selected code to hasteb.in or a custom haste provider",
 	"publisher": "ConorTheDev",
+	"icon": "https://raw.githubusercontent.com/ConorTheDev/vsc-haste/master/img/vsc-haste.png",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/ConorTheDev/vsc-haste.git"
@@ -12,6 +13,7 @@
 		"vscode": "^1.37.0"
 	},
 	"categories": [
+		"Snippets",
 		"Other"
 	],
 	"activationEvents": [
