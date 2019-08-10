@@ -2,12 +2,14 @@ const vscode = require('vscode');
 const haste = require('hastebin-gen')
 const ncp = require("copy-paste");
 const psty = require('@conorthedev/ptsy-node');
+const path = require('path')
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
 	console.log('vsc-haste active!');
+
 	let uploadFile = vscode.commands.registerCommand('extension.vsc-haste.upload-file', function () {
 		const configuration = vscode.workspace.getConfiguration();
 		const code = vscode.window.activeTextEditor.document.getText()
@@ -18,21 +20,27 @@ function activate(context) {
 			currentValue = "https://hasteb.in"
 		} else {
 			if (currentValue == "https://psty.io") {
-				vscode.window.showInformationMessage(`Uploading selected code to ${currentValue}`);
+				vscode.window.showInformationMessage(`Uploading ${path.basename(vscode.window.activeTextEditor.document.fileName)} to ${currentValue}`);
 
 				psty(code).then(out => {
 					ncp.copy(out, function () {
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
 					})
+				}).catch(error => {
+					// Handle error
+					vscode.window.showErrorMessage(`Failed to upload ${path.basename(vscode.window.activeTextEditor.document.fileName)}to ${currentValue} - Error: ${error}`);
 				});
 			} else {
-				vscode.window.showInformationMessage(`Uploading selected code to hasteb.in`);
+				vscode.window.showInformationMessage(`Uploading ${path.basename(vscode.window.activeTextEditor.document.fileName)} to ${currentValue}`);
 
 				haste(code, { url: currentValue, extension: "txt" }).then(out => {
 					ncp.copy(out, function () {
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
 					})
-				})
+				}).catch(error => {
+					// Handle error
+					vscode.window.showErrorMessage(`Failed to upload ${path.basename(vscode.window.activeTextEditor.document.fileName)}to ${currentValue} - Error: ${error}`);
+				});
 			}
 		}
 	});
@@ -48,7 +56,7 @@ function activate(context) {
 		} else {
 			if (currentValue == "https://psty.io") {
 				const code = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection)
-				vscode.window.showInformationMessage(`Uploading ${vscode.window.activeTextEditor.document.fileName} to ${currentValue}`);
+				vscode.window.showInformationMessage(`Uploading selected code to ${currentValue}`);
 
 				psty(code).then(out => {
 					ncp.copy(out, function () {
@@ -56,11 +64,11 @@ function activate(context) {
 					})
 				}).catch(error => {
 					// Handle error
-					vscode.window.showErrorMessage(`Failed to upload ${vscode.window.activeTextEditor.document.fileName} to ${currentValue} - Error: ${error}`);
+					vscode.window.showErrorMessage(`Failed to upload selected code to ${currentValue} - Error: ${error}`);
 				});
 			} else {
 				const code = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection)
-				vscode.window.showInformationMessage(`Uploading ${vscode.window.activeTextEditor.document.fileName} to ${currentValue}`);
+				vscode.window.showInformationMessage(`Uploading selected code to ${currentValue}`);
 
 				haste(code, { url: currentValue, extension: "txt" }).then(out => {
 					ncp.copy(out, function () {
@@ -68,7 +76,7 @@ function activate(context) {
 					})
 				}).catch(error => {
 					// Handle error
-					vscode.window.showErrorMessage(`Failed to upload ${vscode.window.activeTextEditor.document.fileName} to ${currentValue} - Error: ${error}`);
+					vscode.window.showErrorMessage(`Failed to upload selected code to ${currentValue} - Error: ${error}`);
 				});
 			}
 		}
