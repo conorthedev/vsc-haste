@@ -4,6 +4,7 @@
 	"description": "Upload selected code to hasteb.in or a custom haste provider",
 	"publisher": "ConorTheDev",
 	"icon": "img/vsc-haste.png",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/ConorTheDev/vsc-haste.git"
@@ -70,7 +71,7 @@
 		"vscode-test": "^1.0.2"
 	},
 	"dependencies": {
-		"@conorthedev/ptsy-node": "^1.0.0",
+		"@conorthedev/ptsy-node": "^1.0.1",
 		"copy-paste": "^1.3.0",
 		"hastebin-gen": "^2.0.5"
 	}
