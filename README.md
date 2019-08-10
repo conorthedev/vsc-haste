@@ -4,8 +4,7 @@
 <img src="https://img.shields.io/visual-studio-marketplace/d/ConorTheDev.vsc-haste?style=for-the-badge"/>
 <img src="https://img.shields.io/visual-studio-marketplace/v/ConorTheDev.vsc-haste?style=for-the-badge"/>
 <img src="https://img.shields.io/github/license/ConorTheDev/vsc-haste?style=for-the-badge"/>
-<img src="https://img.shields.io/github/issues-raw/ConorTheDev/vsc-haste?style=for-the-badge"/>
-<img src="https://img.shields.io/github/issues-pr-raw/ConorTheDev/vsc-haste?style=for-the-badge"/>
+<img src="https://img.shields.io/endpoint.svg?url=https://shieldsio-patreon.herokuapp.com/ConorTheDev&style=for-the-badge" />
 </p>
 
 ## Features
