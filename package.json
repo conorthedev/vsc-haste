@@ -41,6 +41,17 @@
 					"command": "extension.vsc-haste.upload-file-select"
 				}
 			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "vsc-haste",
+			"properties": {
+				"vsc-haste.host": {
+					"type": "string",
+					"default": "https://hasteb.in",
+					"description": "The host to upload your code to, must include http:// or https://"
+				}
+			}
 		}
 	},
 	"scripts": {
