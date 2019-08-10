@@ -1,6 +1,6 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/ConorTheDev/vsc-haste/master/img/header.png"/>
-
+<br/><br/>
 <img src="https://img.shields.io/visual-studio-marketplace/d/ConorTheDev.vsc-haste?style=for-the-badge"/>
 <img src="https://img.shields.io/visual-studio-marketplace/v/ConorTheDev.vsc-haste?style=for-the-badge"/>
 <img src="https://img.shields.io/github/license/ConorTheDev/vsc-haste?style=for-the-badge"/>
