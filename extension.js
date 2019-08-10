@@ -35,8 +35,13 @@ function activate(context) {
 				});
 			} else {
 				vscode.window.showInformationMessage(`Uploading ${path.basename(vscode.window.activeTextEditor.document.fileName)} to ${currentValue}`);
+				var ext = path.extname(path.basename(vscode.window.activeTextEditor.document.fileName)).replace('.', '')
 
-				haste(code, { url: currentValue, extension: "txt" }).then(out => {
+				if (ext == null) {
+					ext = "txt"
+				}
+
+				haste(code, { url: currentValue, extension: `${ext}` }).then(out => {
 					ncp.copy(out, function () {
 						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
@@ -77,8 +82,13 @@ function activate(context) {
 				});
 			} else {
 				vscode.window.showInformationMessage(`Uploading selected code to ${currentValue}`);
+				var ext = path.extname(path.basename(vscode.window.activeTextEditor.document.fileName)).replace('.', '')
 
-				haste(code, { url: currentValue, extension: "txt" }).then(out => {
+				if (ext == null) {
+					ext = "txt"
+				}
+
+				haste(code, { url: currentValue, extension: `${ext}` }).then(out => {
 					ncp.copy(out, function () {
 						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
