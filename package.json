@@ -8,7 +8,7 @@
 		"type": "git",
 		"url": "git://github.com/ConorTheDev/vsc-haste.git"
 	},
-	"version": "1.0.1",
+	"version": "1.1.1",
 	"engines": {
 		"vscode": "^1.37.0"
 	},
@@ -55,7 +55,8 @@
 		}
 	},
 	"scripts": {
-		"test": "node ./test/runTest.js"
+		"test": "node ./test/runTest.js",
+		"build": "vsce package"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
