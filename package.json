@@ -3,7 +3,7 @@
 	"displayName": "vsc-haste",
 	"description": "Upload selected code to hasteb.in or a custom haste provider",
 	"publisher": "ConorTheDev",
-	"icon": "https://raw.githubusercontent.com/ConorTheDev/vsc-haste/master/img/vsc-haste.png",
+	"icon": "img/vsc-haste.png",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/ConorTheDev/vsc-haste.git"
@@ -41,6 +41,17 @@
 					"command": "extension.vsc-haste.upload-file-select"
 				}
 			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "vsc-haste",
+			"properties": {
+				"vsc-haste.host": {
+					"type": "string",
+					"default": "https://hasteb.in",
+					"description": "The host to upload your code to, must include http:// or https://"
+				}
+			}
 		}
 	},
 	"scripts": {
@@ -58,6 +69,7 @@
 		"vscode-test": "^1.0.2"
 	},
 	"dependencies": {
+		"@conorthedev/ptsy-node": "^1.0.0",
 		"copy-paste": "^1.3.0",
 		"hastebin-gen": "^2.0.5"
 	}
