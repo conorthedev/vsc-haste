@@ -12,6 +12,12 @@ function activate(context) {
 		const configuration = vscode.workspace.getConfiguration();
 		const code = vscode.window.activeTextEditor.document.getText()
 		var currentValue = configuration.get('vsc-haste.host');
+		var currentTheme = configuration.get('vsc-haste.psty.theme');
+
+		if (currentTheme == null) {
+			vscode.workspace.getConfiguration().update('vsc-haste.psty.theme', "default", vscode.ConfigurationTarget.Global);
+			currentTheme = "default"
+		}
 
 		if (currentValue == null) {
 			vscode.workspace.getConfiguration().update('vsc-haste.host', "https://hasteb.in", vscode.ConfigurationTarget.Global);
@@ -19,8 +25,7 @@ function activate(context) {
 		} else {
 			if (currentValue == "https://psty.io") {
 				vscode.window.showInformationMessage(`Uploading ${path.basename(vscode.window.activeTextEditor.document.fileName)} to ${currentValue}`);
-
-				psty(code).then(out => {
+				psty(code, currentTheme).then(out => {
 					ncp.copy(out, function () {
 						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
@@ -45,8 +50,15 @@ function activate(context) {
 
 	let uploadSelection = vscode.commands.registerCommand('extension.vsc-haste.upload-file-select', function () {
 		const configuration = vscode.workspace.getConfiguration();
-		const code = vscode.window.activeTextEditor.document.getText()
+		const code = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection)
+
 		var currentValue = configuration.get('vsc-haste.host');
+		var currentTheme = configuration.get('vsc-haste.psty.theme');
+
+		if (currentTheme == null) {
+			vscode.workspace.getConfiguration().update('vsc-haste.psty.theme', "default", vscode.ConfigurationTarget.Global);
+			currentTheme = "default"
+		}
 
 		if (currentValue == null) {
 			vscode.workspace.getConfiguration().update('vsc-haste.host', "https://hasteb.in", vscode.ConfigurationTarget.Global);
@@ -55,7 +67,7 @@ function activate(context) {
 			if (currentValue == "https://psty.io") {
 				vscode.window.showInformationMessage(`Uploading selected code to ${currentValue}`);
 
-				psty(code).then(out => {
+				psty(code, currentTheme).then(out => {
 					ncp.copy(out, function () {
 						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);

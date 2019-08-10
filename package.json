@@ -51,6 +51,11 @@
 					"type": "string",
 					"default": "https://hasteb.in",
 					"description": "The host to upload your code to, must include http:// or https://"
+				},
+				"vsc-haste.psty.theme": {
+					"type": "string",
+					"default": "default",
+					"description": "The theme to use when uploading to psty.io (matches dropdown on https://psty.io)"
 				}
 			}
 		}
