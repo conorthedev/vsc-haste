@@ -1,18 +1,31 @@
-const assert = require('assert');
 const { before } = require('mocha');
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 const vscode = require('vscode');
-// const myExtension = require('../extension');
+const fs = require('fs')
 
-suite('Extension Test Suite', () => {
+suite('vsc-haste tests', () => {
 	before(() => {
-		vscode.window.showInformationMessage('Start all tests.');
+		vscode.window.showInformationMessage('Starting vsc-haste tests...');
 	});
 
-	test('Sample test', () => {
-		assert.equal(-1, [1, 2, 3].indexOf(5));
-		assert.equal(-1, [1, 2, 3].indexOf(0));
+	test('Upload example file to Haste', (done) => {
+		// Generate a file
+		var content = "this is a test";
+		fs.writeFileSync("test.txt", content, 'utf8');
+
+		// Open the file
+		var openPath = vscode.Uri.file("test.txt");
+		vscode.workspace.openTextDocument(openPath).then(doc => {
+			// Show the file
+			vscode.window.showTextDocument(doc);
+		});
+
+		try {
+			// Run the upload-file command
+			vscode.commands.executeCommand('extension.vsc-haste.upload-file').then(function (out) {
+				done()
+			})
+		} catch (err) {
+			done(new Error(err))
+		}
 	});
 });
