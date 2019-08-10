@@ -3,6 +3,7 @@ const haste = require('hastebin-gen')
 const ncp = require("copy-paste");
 const psty = require('@conorthedev/ptsy-node');
 const path = require('path')
+const detect = require('language-detect')
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -25,9 +26,10 @@ function activate(context) {
 		} else {
 			if (currentValue == "https://psty.io") {
 				vscode.window.showInformationMessage(`Uploading ${path.basename(vscode.window.activeTextEditor.document.fileName)} to ${currentValue}`);
-				psty(code, currentTheme).then(out => {
+				var ext = detect.filename(vscode.window.activeTextEditor.document.fileName).toLowerCase()
+
+				psty(code, currentTheme, `${ext}`).then(out => {
 					ncp.copy(out, function () {
-						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
 					})
 				}).catch(error => {
@@ -71,8 +73,9 @@ function activate(context) {
 		} else {
 			if (currentValue == "https://psty.io") {
 				vscode.window.showInformationMessage(`Uploading selected code to ${currentValue}`);
+				var ext = detect.filename(vscode.window.activeTextEditor.document.fileName).toLowerCase()
 
-				psty(code, currentTheme).then(out => {
+				psty(code, currentTheme, `${ext}`).then(out => {
 					ncp.copy(out, function () {
 						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
