@@ -32,7 +32,7 @@ steps:
     echo ">>> Compiled vscode-test"
     cd sample
     echo ">>> Run sample integration test"
-    yarn && yarn compile && yarn test
+    npm i && npm test
   displayName: Run Tests
   env:
     DISPLAY: ':99.0'
