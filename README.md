@@ -2,7 +2,13 @@
 
 ## Features
 
-Upload a selection of code to hastebin, or even a full file!
+* Upload a selection of code to hastebin, or even a full file!
+* Support for [psty](https://psty.io), [pastebin](https://pastebin.com) and all hastebin-based websites!
+* Context menu actions
+
+![context-windows](https://raw.githubusercontent.com/ConorTheDev/vsc-haste/master/img/preview/context-windows.png)
+![context](https://raw.githubusercontent.com/ConorTheDev/vsc-haste/master/img/preview/context.png)
+
 
 ## Requirements
 
