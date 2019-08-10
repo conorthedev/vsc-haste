@@ -24,6 +24,7 @@ function activate(context) {
 
 				psty(code).then(out => {
 					ncp.copy(out, function () {
+						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
 					})
 				}).catch(error => {
@@ -35,6 +36,7 @@ function activate(context) {
 
 				haste(code, { url: currentValue, extension: "txt" }).then(out => {
 					ncp.copy(out, function () {
+						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
 					})
 				}).catch(error => {
@@ -60,6 +62,7 @@ function activate(context) {
 
 				psty(code).then(out => {
 					ncp.copy(out, function () {
+						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
 					})
 				}).catch(error => {
@@ -72,6 +75,7 @@ function activate(context) {
 
 				haste(code, { url: currentValue, extension: "txt" }).then(out => {
 					ncp.copy(out, function () {
+						console.log(`URL: ${out} - Copied to clipboard!`)
 						vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
 					})
 				}).catch(error => {

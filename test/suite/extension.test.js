@@ -1,6 +1,7 @@
 const { before } = require('mocha');
 const vscode = require('vscode');
 const fs = require('fs')
+const path = require('path')
 
 suite('vsc-haste tests', () => {
 	before(() => {
@@ -9,23 +10,26 @@ suite('vsc-haste tests', () => {
 
 	test('Upload example file to Haste', (done) => {
 		// Generate a file
-		var content = "this is a test";
-		fs.writeFileSync("test.txt", content, 'utf8');
-
-		// Open the file
-		var openPath = vscode.Uri.file("test.txt");
-		vscode.workspace.openTextDocument(openPath).then(doc => {
-			// Show the file
-			vscode.window.showTextDocument(doc);
+		const newFile = vscode.Uri.parse('untitled:' + 'testatestsdsfsdjsdf.txt');
+		vscode.workspace.openTextDocument(newFile).then(document => {
+			const edit = new vscode.WorkspaceEdit();
+			edit.insert(newFile, new vscode.Position(0, 0), "Hello world!");
+			return vscode.workspace.applyEdit(edit).then(success => {
+				if (success) {
+					vscode.window.showTextDocument(document);
+					try {
+						// Run the upload-file command
+						vscode.commands.executeCommand('extension.vsc-haste.upload-file').then(() => {
+							done()
+						})
+					} catch (err) {
+						done(new Error(err))
+					}
+				} else {
+					vscode.window.showInformationMessage('Error!');
+					done(new Error("Error whilst creating new file"))
+				}
+			});
 		});
-
-		try {
-			// Run the upload-file command
-			vscode.commands.executeCommand('extension.vsc-haste.upload-file').then(function (out) {
-				done()
-			})
-		} catch (err) {
-			done(new Error(err))
-		}
 	});
 });
