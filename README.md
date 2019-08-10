@@ -22,11 +22,18 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 1.1.0
+
+* Added custom icon
+* Added header image
+* [psty](https://psty.io) support
+* General Improvements
+
 ### 1.0.1
 
-Fix commands not showing in context menu
+* Fix commands not showing in context menu
 
 
 ### 1.0.0
 
-Initial release of vsc-haste!
+* Initial release of vsc-haste!
