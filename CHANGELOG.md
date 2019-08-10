@@ -7,18 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2019-08-10
 ### Added
 - UI Settings, no need to edit JSON values!
-
-### Changed
-- n/a
-
-### Removed
-- n/a
-
-## [1.1.0] - 2019-08-10
-### Added
-- New icon
-- New header image in the README
+- Added custom icon
+- Added header image
 - [psty](https://psty.io) support
+- General Improvements
 
 ### Changed
 - n/a

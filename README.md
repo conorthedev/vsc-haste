@@ -30,11 +30,8 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-### 1.1.1
-* UI Settings, no need to edit JSON values!
-
 ### 1.1.0
-
+* UI Settings, no need to edit JSON values!
 * Added custom icon
 * Added header image
 * [psty](https://psty.io) support
