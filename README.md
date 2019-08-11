@@ -34,6 +34,18 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 1.2.0
+#### Added
+* psty theme selection (vsc-haste.psty.theme)
+* Language detection for hastebin based sites
+* Experimental language detection for psty
+* Better error handling
+
+#### Changed / Fixed
+* Rewrote codebase, should be faster and extension should be slightly smaller in release than in dev builds (575.01kb before rewrite, 507.07 after)
+* Fix the notification text being the opposite of the action run
+
+
 ### 1.1.0
 * UI Settings, no need to edit JSON values!
 * Added custom icon
