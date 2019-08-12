@@ -1,118 +1,95 @@
-const vscode = require('vscode');
-const haste = require('hastebin-gen')
+const vscode = require("vscode");
+const haste = require("hastebin-gen");
 const ncp = require("copy-paste");
-const psty = require('@conorthedev/ptsy-node');
-const path = require('path')
-const detect = require('language-detect')
+const psty = require("@conorthedev/ptsy-node");
+const path = require("path");
+const detect = require("language-detect");
 
-const extension = vscode.extensions.getExtension('ConorTheDev.vsc-haste')
+const extension = vscode.extensions.getExtension("ConorTheDev.vsc-haste");
 
 /**
  * Upload code to psty / a haste based host
- * @param {String} host 
- * @param {String} code 
- * @param {Array} data 
+ * @param {string} host
+ * @param {string} code
+ * @param {string} fileName
+ * @param {string} theme
  */
-function upload(host, code, data = {}, filename) {
-	if (host == "https://psty.io") {
-		var ext = detect.filename(filename).toLowerCase()
+async function upload(host, code, fileName, theme) {
+	let uploadPromise = undefined;
 
-		psty(code, data['theme'], `${ext}`).then(out => {
-			ncp.copy(out, function () {
-				console.log(`${extension.packageJSON.displayName}: URL: ${out} - Copied to clipboard!`)
-				vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
-			})
-		}).catch(error => {
-			vscode.window.showErrorMessage(`Failed to upload selected code to ${host} - Error: ${error}`);
-		});
+	if (host === "https://psty.io") {
+		uploadPromise = psty(code, theme, detect.filename(fileName).toLowerCase());
 	} else {
-		var ext = path.extname(filename).replace('.', '')
+		const ext = path.extname(fileName).replace(".", "") || "txt";
+		uploadPromise = haste(code, { url: host, extension: ext });
+	}
 
-		if (ext == null) {
-			ext = "txt"
+	let url;
+
+	try {
+		url = await uploadPromise;
+	} catch (err) {
+		vscode.window.showErrorMessage(`Failed to upload code to ${host} - Error: ${err}`);
+		console.error(err);
+		return;
+	}
+
+	ncp.copy(url, function(err) {
+		if (err) {
+			vscode.window.showErrorMessage(`Failed to copy URL to clipboard - Error: ${err}`);
+			console.error(err);
+			return;
 		}
 
-		haste(code, { url: host, extension: `${ext}` }).then(out => {
-			ncp.copy(out, function () {
-				console.log(`${extension.packageJSON.displayName}: URL: ${out} - Copied to clipboard!`)
-				vscode.window.showInformationMessage(`URL: ${out} - Copied to clipboard!`);
-			})
-		}).catch(error => {
-			vscode.window.showErrorMessage(`Failed to upload selected code to ${host} - Error: ${error}`);
-		});
-	}
+		vscode.window.showInformationMessage(`URL: ${url} - Copied to clipboard!`);
+		console.log(`${extension.packageJSON.displayName}: URL: ${url} - Copied to clipboard!`);
+	});
 }
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	console.log(`${extension.packageJSON.displayName}: Loaded ${extension.packageJSON.publisher}.${extension.packageJSON.displayName} v${extension.packageJSON.version}`)
+	console.log(`${extension.packageJSON.displayName}: Loaded ${extension.packageJSON.publisher}.${extension.packageJSON.displayName} v${extension.packageJSON.version}`);
 
-	let uploadFile = vscode.commands.registerCommand('extension.vsc-haste.upload-file', function () {
+	const uploadFile = vscode.commands.registerCommand("extension.vsc-haste.upload-file", function () {
 		const configuration = vscode.workspace.getConfiguration();
-		const code = vscode.window.activeTextEditor.document.getText()
-		const filename = path.basename(vscode.window.activeTextEditor.document.fileName)
+		const code = vscode.window.activeTextEditor.document.getText().trim();
+		const fileName = path.basename(vscode.window.activeTextEditor.document.fileName);
+		const host = configuration.get("vsc-haste.host") || "https://hasteb.in";
+		const theme = configuration.get("vsc-haste.psty.theme") || "default";
 
-		var host = configuration.get('vsc-haste.host');
-		var theme = configuration.get('vsc-haste.psty.theme');
-
-		if (theme == null) {
-			vscode.workspace.getConfiguration().update('vsc-haste.psty.theme', "default", vscode.ConfigurationTarget.Global);
-			theme = "default"
-		}
-
-		if (host == null) {
-			vscode.workspace.getConfiguration().update('vsc-haste.host', "https://hasteb.in", vscode.ConfigurationTarget.Global);
-			currentValue = "https://hasteb.in"
-		}
-
-
-		if (code == "") {
-			vscode.window.showErrorMessage(`This file is empty! Put some code in this file and try again`);
+		if (code.length === 0) {
+			vscode.window.showErrorMessage("This file is empty! Put some code in this file and try again");
 			return;
 		}
 
-		vscode.window.showInformationMessage(`Uploading ${filename} to ${host}`);
-		upload(host, code, { 'theme': theme }, filename)
+		vscode.window.showInformationMessage(`Uploading ${fileName} to ${host}`);
+		upload(host, code, fileName, theme);
 	});
 
-	let uploadSelection = vscode.commands.registerCommand('extension.vsc-haste.upload-file-select', function () {
+	const uploadSelection = vscode.commands.registerCommand("extension.vsc-haste.upload-file-select", function () {
 		const configuration = vscode.workspace.getConfiguration();
-		const code = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection)
-		const filename = path.basename(vscode.window.activeTextEditor.document.fileName)
+		const code = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection).trim();
+		const fileName = path.basename(vscode.window.activeTextEditor.document.fileName);
+		const host = configuration.get("vsc-haste.host") || "https://hasteb.in";
+		const theme = configuration.get("vsc-haste.psty.theme") || "default";
 
-		var host = configuration.get('vsc-haste.host');
-		var theme = configuration.get('vsc-haste.psty.theme');
-
-		if (theme == null) {
-			vscode.workspace.getConfiguration().update('vsc-haste.psty.theme', "default", vscode.ConfigurationTarget.Global);
-			theme = "default"
-		}
-
-		if (host == null) {
-			vscode.workspace.getConfiguration().update('vsc-haste.host', "https://hasteb.in", vscode.ConfigurationTarget.Global);
-			currentValue = "https://hasteb.in"
-		}
-
-		if (code == "") {
-			vscode.window.showErrorMessage(`You have selected no code! Select some code and try again`);
+		if (code.length === 0) {
+			vscode.window.showErrorMessage("You have selected no code! Select some code and try again");
 			return;
 		}
 
-		vscode.window.showInformationMessage(`Uploading selected code in ${filename} to ${host}`);
-		upload(host, code, { 'theme': theme }, filename)
+		vscode.window.showInformationMessage(`Uploading selected code in ${fileName} to ${host}`);
+		upload(host, code, fileName, theme);
 	});
 
-	context.subscriptions.push(uploadFile);
-	context.subscriptions.push(uploadSelection);
+	context.subscriptions.push(uploadFile, uploadSelection);
 }
 
-exports.activate = activate;
-
-function deactivate() { }
+function deactivate() {}
 
 module.exports = {
 	activate,
 	deactivate
-}
+};
